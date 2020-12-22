@@ -1,58 +1,74 @@
 # Point of sale test
+Desarrollo de una API Rest que implementa un sistema de inventario de productos y órdenes.
 
-Write a very basic Django project that uses Django Rest Framework to provide a RESTful API for a point of sale that let's you track the inventory of products and the orders done.
+## Instalación
+Requerimientos:
+- Entorno virtual (venv)
+- Python 3.7, pip
 
-Use the provided project boilerplate and add the code needed to pass all the *unit tests* provided in both `modules.inventory.tests` and `modules.orders.tests`.
+### Entorno de Desarrollo
 
-Use at least the models provided in both `modules.inventory.models` and `modules.orders.models`, but feel free to add any extra model if needed. You are only allowed to use `django-rest-framework` and no other library.
+Este entorno permite realizar modificaciones en la API. 
+Para ello es necesario crear un entorno virtual, donde se resguardan todas las paqueterías necesarias para el desarrollo 
+en la plataforma:
 
-The API must use **JSON** format and should provide the following endpoints and functionalities:
+1. Crear entorno virtual (_venv_)
+```shell script 
+virtualenv venv
+```
+2. Activar entorno virtual
+```shell script
+source venv/bin/activate
+```
+3. Instalar paqueterías
+```shell script
+(venv) pip install -r PATH/requirements.txt
+```
 
-### `/api/products/`
+Con estos pasos generamos el acceso a las bibliotecas necesarias para el desarrollo del proyecto.
 
-* List all existing products
-* Create a new product
-* Retrieve an existing product
-* Update an existing product
+1. Es necesario realizar las migraciones correspondientes ejecute el siguiente comando en la terminal dentro de la misma carpeta:
+```shell script
+python src/manage.py makemigrations
+python src/manage.py migrate
+```
+2. Para ejecutar los test de la API, ejecute el siguiente comando en la terminal dentro de la misma carpeta:
+```shell script
+src/manage.py test src
+```
+3. Si todo se encuentra en orden, podrá observar la respuesta de la API en OK
 
-Note that **deleting a product is not allowed**.
 
-A product must allow you to save:
 
-* The description of the product
-* The unit price of the product in cents
-* The available stock of the product
+**Endpoints disponibles:**
 
-### `/api/orders/`
+- Consultar productos
+GET: http://127.0.0.1:8000/api/products/
 
-* List all existing orders
-* Create a new order
-* Retrieve an existing order
+- Consultar órdenes
+GET: http://127.0.0.1:8000/api/orders/
 
-Note that **updating or deleting a product is not allowed**.
+- Insertar nuevo producto
+POST: http://127.0.0.1:8000/api/products/create/
 
-A order must allow you to save/calculate:
+- Insertar nueva orden
+POST: http://127.0.0.1:8000/api/orders/create/
 
-* The list of items that were purchased
-* The quantity of each item
-* The total amount earned by the order in cents
+- Consultar producto
+GET: http://127.0.0.1:8000/api/products/retrieve/id/
 
-Note that when a order is created, the corresponding products' stock must be updated.
+- Consultar orden
+GET: http://127.0.0.1:8000/api/orders/retrieve/id/
 
-## Instructions
+- Actualizar producto
+PUT / PATCH: http://127.0.0.1:8000/api/products/update/id/
 
-### For code
-1. Fork this repository
-2. Get a local copy of your fork
-3. Create a new branch
-4. Install the requirements with `pip install -r requirements.txt`
-5. Run your tests with `python src/manage.py test src`
-6. Commit your work when the command above reports an OK result
-7. Push your work to your fork
-8. Send a pull request from your fork's branch to this repo
+- Actualizar orden
+PUT / PATCH: http://127.0.0.1:8000/api/orders/update/id/
 
-### For deployment
-1. Complete the `Dockerfile` to assemble an image.
-2. Configure with `Gunicorn` and connect with a web server or reverse proxy that you prefer.
-3. Deploy it in the cloud infrastructure that you prefer (Ask for an instance if you don't have).
-4. Create a basic document with the steps to deploy.
+- Eliminar producto
+DELETE: http://127.0.0.1:8000/api/products/delete/id/
+
+- Eliminar orden
+DELETE: http://127.0.0.1:8000/api/orders/delete/id/
+
